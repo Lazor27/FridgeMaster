@@ -16,9 +16,10 @@ class BookingController extends Controller
      * Возвращает цену брони и количество блоков
      * @param Request $request
      * @param BookingService $bookingService
+     * @param Bookings $booking
      * @return array
      */
-    public function bookBlock (Request $request, BookingService $bookingService) {
+    public function bookBlock (Request $request, BookingService $bookingService, Bookings $booking) {
         $requestBody = $request->json()->all();
         //validation
         $rules = [
@@ -33,8 +34,6 @@ class BookingController extends Controller
         if (!$validator->passes()) {
             return($validator->errors()->all());
         }
-
-        $booking = new Bookings; //model
 
         $booking->user_id = Auth::id();
         $booking->location_id = $requestBody['location_id'];
