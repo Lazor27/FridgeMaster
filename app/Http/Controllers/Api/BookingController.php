@@ -15,9 +15,10 @@ class BookingController extends Controller
      * Метод для бронирования блоков, сохраняет бронь в таблицу bookings
      * Возвращает цену брони и количество блоков
      * @param Request $request
+     * @param BookingService $bookingService
      * @return array
      */
-    public function bookBlock (Request $request) {
+    public function bookBlock (Request $request, BookingService $bookingService) {
         $requestBody = $request->json()->all();
         //validation
         $rules = [
@@ -33,7 +34,6 @@ class BookingController extends Controller
             return($validator->errors()->all());
         }
 
-        $bookingService = new BookingService; // helper
         $booking = new Bookings; //model
 
         $booking->user_id = Auth::id();
